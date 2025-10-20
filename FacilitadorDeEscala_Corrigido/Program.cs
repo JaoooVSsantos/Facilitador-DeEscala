@@ -1,0 +1,3 @@
+using Microsoft.AspNetCore.Builder;using Microsoft.Extensions.DependencyInjection;using Microsoft.Extensions.Hosting;using FacilitadorDeEscala.Services;
+var b=WebApplication.CreateBuilder(args);b.Services.AddRazorPages();b.Services.AddServerSideBlazor();b.Services.AddSingleton<EscalaService>();
+var a=b.Build();if(!a.Environment.IsDevelopment())a.UseExceptionHandler("/Error");a.UseStaticFiles();a.UseRouting();a.MapBlazorHub();a.MapFallbackToPage("/_Host");a.Run();

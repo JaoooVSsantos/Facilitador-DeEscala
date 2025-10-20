@@ -1,0 +1,1 @@
+using System;using System.Collections.Generic;namespace FacilitadorDeEscala.Models{public class Funcionario{public string Nome{get;set;}="";public int NumeroFolgas{get;set;}=2;public List<int>FolgasPreferenciais{get;set;}=new();public int?UltimaFolgaAnterior{get;set;}public bool[]FolgasNaEscala{get;set;}=Array.Empty<bool>();}}

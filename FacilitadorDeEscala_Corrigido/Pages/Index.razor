@@ -1,0 +1,10 @@
+@page "/"
+@using Microsoft.JSInterop
+@inject FacilitadorDeEscala.Services.EscalaService EscalaService
+@inject IJSRuntime JS
+<h3>Facilitador de Escala</h3>
+<select @bind="TotalDias"><option value="30">30 dias</option><option value="31">31 dias</option></select>
+<input placeholder="Nome" @bind="NovoNome"/><input type="number" min="1" max="10" @bind="NovoNumeroFolgas"/><button @onclick="AdicionarFuncionario">Adicionar</button>
+<ul>@foreach(var f in Funcionarios){<li>@f.Nome - Folgas: @f.NumeroFolgas</li>}</ul>
+<button class="btn btn-outline-primary" @onclick="ExportCsv">Exportar CSV</button>
+@code{int TotalDias=30;string NovoNome="";int NovoNumeroFolgas=2;List<FacilitadorDeEscala.Models.Funcionario>Funcionarios=new();void AdicionarFuncionario(){if(string.IsNullOrWhiteSpace(NovoNome))return;Funcionarios.Add(new FacilitadorDeEscala.Models.Funcionario{Nome=NovoNome,NumeroFolgas=NovoNumeroFolgas});NovoNome="";NovoNumeroFolgas=2;}async Task ExportCsv(){var csv=EscalaService.GerarCsv(TotalDias,Funcionarios);var bytes=System.Text.Encoding.UTF8.GetBytes(csv);var base64=Convert.ToBase64String(bytes);await JS.InvokeVoidAsync("downloadFileFromBase64",new object[]{"escala.csv",base64});}}
